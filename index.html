@@ -1299,29 +1299,33 @@
       var wm = document.querySelector(".wordmark");
       if (!head || !wm) return;
       var slimNow = false;
-      function syncHead() {
+      function scrollY() {
         var y = window.scrollY || window.pageYOffset || 0;
+        var doc = document.documentElement.scrollTop || 0;
+        var body = document.body ? document.body.scrollTop || 0 : 0;
+        var view = window.visualViewport && window.visualViewport.pageTop ? window.visualViewport.pageTop : 0;
+        return Math.max(y, doc, body, view);
+      }
+      function shiftToCenter() {
+        var headRect = head.getBoundingClientRect();
+        var nameCenter = headRect.left + head.clientLeft + wm.offsetLeft + wm.offsetWidth / 2;
+        return ((headRect.left + headRect.right) / 2) - nameCenter;
+      }
+      function syncHead() {
+        var y = scrollY();
         var slim = slimNow ? y > 2 : y > 8;
         if (slim === slimNow) return;
         slimNow = slim;
         if (slim) {
-          wm.style.transition = "none";
-          wm.style.transform = "translate3d(0, 0, 0)";
-          var hr = head.getBoundingClientRect();
-          var wr = wm.getBoundingClientRect();
-          var shift = ((hr.left + hr.right) / 2) - ((wr.left + wr.right) / 2);
-          void wm.offsetWidth;
-          wm.style.transition = "";
-          void wm.offsetWidth;
           head.classList.add("is-slim");
-          wm.style.transform = "translate3d(" + shift.toFixed(2) + "px, 0, 0)";
+          wm.style.transform = "translate3d(" + shiftToCenter().toFixed(2) + "px, 0, 0)";
         } else {
           head.classList.remove("is-slim");
           wm.style.transform = "translate3d(0, 0, 0)";
         }
       }
       window.addEventListener("scroll", syncHead, { passive: true });
-      window.addEventListener("resize", function () { if (slimNow) { slimNow = false; syncHead(); } });
+      if (window.visualViewport) window.visualViewport.addEventListener("scroll", syncHead, { passive: true });
       syncHead();
     })();
     var IMPRESSUM = {
