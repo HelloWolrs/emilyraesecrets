@@ -50,7 +50,7 @@
       width: min(100% - 40px, 720px);
       margin: 18px auto 22px;
       padding: 0 14px calc(36px + env(safe-area-inset-bottom));
-      background: linear-gradient(180deg, rgba(255, 252, 248, 0.62), rgba(244, 246, 239, 0.4));
+      background: linear-gradient(180deg, rgba(255, 252, 248, 0.42), rgba(244, 246, 239, 0.22));
       border: 1px solid rgba(255, 252, 248, 0.92);
       border-radius: 28px;
       box-shadow:
@@ -190,8 +190,53 @@
     }
     .hero {
       display: grid; grid-template-columns: 124px 1fr; gap: 18px; align-items: start;
-      margin-top: 14px; animation: rise 0.7s ease both;
+      margin-top: 16px; animation: rise 0.7s ease both;
     }
+    .plate {
+      position: relative; z-index: 1;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: 24px;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 0 0 1px rgba(111, 148, 124, 0.16),
+        0 18px 36px rgba(80, 50, 46, 0.07);
+      padding: 16px 16px 18px;
+      overflow: visible;
+    }
+    .plate::before {
+      content: "";
+      position: absolute; inset: 0; z-index: -1;
+      border-radius: inherit; pointer-events: none;
+      background: linear-gradient(165deg, rgba(255, 252, 248, 0.48), rgba(255, 252, 248, 0.22));
+      backdrop-filter: blur(16px) saturate(1.2);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    }
+    .hero.plate::before {
+      background:
+        radial-gradient(220px 140px at 0% 0%, rgba(176, 214, 176, 0.55), transparent 70%),
+        radial-gradient(180px 120px at 100% 100%, rgba(255, 214, 206, 0.35), transparent 72%),
+        linear-gradient(165deg, rgba(255, 252, 248, 0.5), rgba(255, 252, 248, 0.2));
+    }
+    .rail.plate::before {
+      background:
+        radial-gradient(240px 150px at 100% 0%, rgba(212, 120, 136, 0.4), transparent 68%),
+        radial-gradient(180px 120px at 0% 100%, rgba(176, 214, 176, 0.32), transparent 72%),
+        linear-gradient(165deg, rgba(255, 252, 248, 0.48), rgba(244, 246, 239, 0.18));
+    }
+    #atelier.plate::before {
+      background:
+        radial-gradient(260px 160px at 100% 120%, rgba(255, 160, 172, 0.5), transparent 70%),
+        radial-gradient(140px 90px at 0% 0%, rgba(255, 228, 214, 0.4), transparent 72%),
+        linear-gradient(165deg, rgba(255, 252, 248, 0.46), rgba(255, 244, 244, 0.18));
+    }
+    #schreiben.plate::before {
+      background:
+        radial-gradient(240px 150px at 0% 110%, rgba(176, 204, 230, 0.5), transparent 70%),
+        radial-gradient(160px 100px at 100% 0%, rgba(236, 210, 224, 0.36), transparent 72%),
+        linear-gradient(165deg, rgba(255, 252, 248, 0.48), rgba(255, 252, 248, 0.18));
+    }
+    .plate > .label { margin: 0 0 10px; }
     .portrait { position: relative; z-index: 2; width: 124px; height: 164px; padding-top: 40px; overflow: visible; }
     .frame {
       position: relative; z-index: 1;
@@ -279,7 +324,7 @@
     }
     .list { display: flex; flex-direction: column; }
     .motto {
-      margin: 32px auto 0; max-width: 26em;
+      margin: 22px auto; max-width: 26em;
       text-align: center;
       font-family: "Cormorant Garamond", Georgia, serif;
       font-style: italic; font-weight: 500;
@@ -295,7 +340,8 @@
       transition: opacity 0.7s ease;
     }
     .motto p.glint { animation: glint 1.8s ease; }
-    .rail { position: relative; margin-top: 52px; scroll-margin-top: 174px; }
+    .rail { position: relative; margin-top: 0; scroll-margin-top: 174px; }
+    section.plate { margin-top: 16px; scroll-margin-top: 174px; }
     .hint {
       position: absolute; z-index: 5; pointer-events: none;
       max-width: min(16em, calc(100vw - 48px)); padding: 8px 12px 9px; border-radius: 10px;
@@ -364,9 +410,9 @@
     .book {
       flex: 0 0 88%; scroll-snap-align: start;
       display: grid; grid-template-columns: 102px minmax(0, 1fr); gap: 14px; align-items: start;
-      padding: 12px; border-radius: 18px; background: rgba(255, 252, 248, 0.92);
-      border: 1px solid rgba(111, 148, 124, 0.16);
-      box-shadow: 0 14px 32px rgba(60, 80, 60, 0.07);
+      padding: 12px; border-radius: 16px; background: rgba(255, 252, 248, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
       transition: opacity 0.45s ease, transform 0.45s ease;
     }
     .book.is-off { opacity: 0.92; }
@@ -638,7 +684,8 @@
       }
       .members-mini { font-size: 6.5px; letter-spacing: 0; padding-bottom: 1px; }
       .jump a { padding: 6px 7px; letter-spacing: 0.04em; font-size: 10.5px; white-space: nowrap; }
-      .label, .rail { scroll-margin-top: 238px; }
+      .plate { padding: 12px; border-radius: 16px; }
+      .label, .rail, .plate { scroll-margin-top: 238px; }
       .row { padding: 14px 0; }
       .secrets { font-size: 30px; }
       .go { letter-spacing: 0.06em; }
@@ -720,7 +767,7 @@
       </nav>
     </div>
 
-    <section class="hero">
+    <section class="hero plate">
       <div class="portrait">
         <div class="frame" role="img" aria-label="Porträt von Emily Rae" data-de-aria="Porträt von Emily Rae"></div>
         <span class="float-heart" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#d4233a" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
@@ -742,7 +789,7 @@
       <p id="mottoLine" data-i18n>Die gefährlichste Illusion ist die, die sich echter anfühlt als die Wahrheit.</p>
     </blockquote>
 
-    <div class="rail" id="buecher">
+    <div class="rail plate" id="buecher">
       <div class="rail-head">
         <p class="label" data-i18n>Bücher</p>
         <div class="rail-nav">
@@ -839,7 +886,8 @@
       <div class="dots" id="bookDots"></div>
     </div>
 
-    <p class="label" id="atelier" data-i18n>Atelier</p>
+    <section class="plate" id="atelier">
+    <p class="label" data-i18n>Atelier</p>
     <div class="hint-host">
     <span class="hint" data-i18n>Die Tür ist nur angelehnt.</span>
     <button class="door" id="openRoom" type="button">
@@ -851,7 +899,10 @@
     </button>
     </div>
 
-    <p class="label" id="schreiben" data-i18n>Schreib mir</p>
+    </section>
+
+    <section class="plate" id="schreiben">
+    <p class="label" data-i18n>Schreib mir</p>
     <nav class="list" aria-label="TikTok und Instagram" data-de-aria="TikTok und Instagram">
       <a class="row brand-row tt" id="tiktok" href="#" target="_blank" rel="noopener noreferrer">
         <span class="mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#25F4EE" transform="translate(-0.6 0.4)" d="M14.5 3c.5 2.6 1.9 4.4 4.3 4.7v2.7a7 7 0 0 1-4.2-1.4v6.7c0 3.4-2.7 6.1-6.1 6.1S2.4 19.1 2.4 15.7s2.7-6.1 6.1-6.1c.3 0 .7 0 1 .1v2.8a3.3 3.3 0 0 0-1-.2 3.3 3.3 0 0 0-3.3 3.3 3.3 3.3 0 0 0 3.3 3.3 3.3 3.3 0 0 0 3.3-3.3V3h2.7z"/><path fill="#FE2C55" transform="translate(0.6 -0.35)" d="M14.5 3c.5 2.6 1.9 4.4 4.3 4.7v2.7a7 7 0 0 1-4.2-1.4v6.7c0 3.4-2.7 6.1-6.1 6.1S2.4 19.1 2.4 15.7s2.7-6.1 6.1-6.1c.3 0 .7 0 1 .1v2.8a3.3 3.3 0 0 0-1-.2 3.3 3.3 0 0 0-3.3 3.3 3.3 3.3 0 0 0 3.3 3.3 3.3 3.3 0 0 0 3.3-3.3V3h2.7z"/><path fill="#fff" d="M14.5 3c.5 2.6 1.9 4.4 4.3 4.7v2.7a7 7 0 0 1-4.2-1.4v6.7c0 3.4-2.7 6.1-6.1 6.1S2.4 19.1 2.4 15.7s2.7-6.1 6.1-6.1c.3 0 .7 0 1 .1v2.8a3.3 3.3 0 0 0-1-.2 3.3 3.3 0 0 0-3.3 3.3 3.3 3.3 0 0 0 3.3 3.3 3.3 3.3 0 0 0 3.3-3.3V3h2.7z"/></svg></span>
@@ -866,6 +917,7 @@
         <span class="hint">Follow Me</span>
       </a>
     </nav>
+    </section>
 
     <footer>
       <p data-i18n>Foto · Emily Rae</p>
