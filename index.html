@@ -84,7 +84,12 @@
       background: rgba(255, 252, 248, 0.94);
       backdrop-filter: blur(16px);
     }
-    .wordmark { grid-column: 1; grid-row: 1; display: flex; align-items: baseline; gap: 8px; margin: 0; min-width: 0; }
+    .wordmark {
+      grid-column: 1; grid-row: 1; display: flex; align-items: baseline; gap: 8px;
+      margin: 0; width: max-content; max-width: 100%;
+      position: relative; left: 0; transform: translateX(0);
+      transition: left 0.45s ease, transform 0.45s ease;
+    }
     .corner {
       grid-column: 2; grid-row: 1 / span 3; width: 86px;
       display: grid; grid-template-rows: subgrid;
@@ -191,9 +196,14 @@
       background: rgba(232, 196, 196, 0.7); border-color: rgba(196, 140, 140, 0.38); color: #7a3a44;
     }
     .sticky-head.is-slim {
+      grid-template-columns: 1fr;
       grid-template-rows: auto;
       row-gap: 0;
       padding-bottom: 12px;
+    }
+    .sticky-head.is-slim .wordmark {
+      left: 50%;
+      transform: translateX(-50%);
     }
     .sticky-head.is-slim .corner,
     .sticky-head.is-slim .jump,
